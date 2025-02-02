@@ -1,0 +1,47 @@
+﻿@model List<DTO.UserDto.UserUpdateDto>
+<div class="row bar-row ">
+	<div class="profile-bar-parent col-md-12">
+		<div class="profile-bar">
+			<a href="">Friends</a>
+			<a href="">Comments</a>
+			<a href="">Details</a>
+			<a href="">User's Blogs</a>
+		</div>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 friendlist1 ">
+			<div class="card friends-card">
+				<div class="header">
+					<h2>Friends</h2>
+				</div>
+				<div class="body">
+
+					<ul class="new_friend_list list-unstyled row">
+						@foreach (var friend in @Model)
+						{
+							<li class="col-lg-4 col-md-2 col-sm-6 col-4 friend-profiles">
+
+								<a href="/UserDefault/Index/@friend.UserId">
+									@if (string.IsNullOrEmpty(friend.UserImage))
+									{
+										<img src="~/images/36875007-5a47-4a0b-88f8-d5cc1fd0df27_IMG_20220606_143431.jpg" class="img-thumbnail" alt="User Image">
+									}
+									else
+									{
+										<img src="~/images/@friend.UserImage" class="img-thumbnail" alt="User Image">
+									}								
+									<h6 class="users_name">@friend.FirstName @friend.LastName</h6>
+									<small class="join_date">Today</small>
+								</a>
+
+							</li>
+
+						}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

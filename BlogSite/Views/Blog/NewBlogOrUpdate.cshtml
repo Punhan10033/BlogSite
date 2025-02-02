@@ -1,0 +1,77 @@
+﻿@using DTO
+@model DTO.BlogDto.BlogToAddDto;
+@{
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+@* <!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Blog Post</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    
+</head> *@
+@ViewBag.ErrorMessage;
+    <div id="addblogform" class="container">
+        <h2 class="text-center">Add a New Blog Post</h2>
+        <form asp-controller="Blog" asp-route-Id="@Model.BlogId" enctype="multipart/form-data" asp-action="AddOrUpdateBlog">
+            <div class="form-group">
+                <label asp-for="BlogTitle" for="title">Title</label>
+                <input asp-for="BlogTitle" type="text" class="form-control" id="title" placeholder="Enter title">
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select class="form-control" asp-items="@(ViewBag.Categories)" asp-for="CategoryId" id="category"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BlogContent">Content</label>
+                <textarea asp-for="BlogContent" class="form-control" id="content" rows="5" placeholder="Write your content here..." oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+            </div>
+            <div class="form-group">
+            <label for="BlogPictures">Upload Images</label>
+            <input type="file" name="BlogPictures" class="form-control-file" id="images" multiple accept="image/*">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Post</button>
+                <button type="button" class="btn btn-secondary">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+
+
+<style>
+/*     body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+        padding: 20px;
+    } */
+   
+
+    #addblogform {
+        max-width: 700px;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom:20px;
+    }
+
+    .form-control, .form-control-file {
+        margin-bottom: 15px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    h2 {
+        color: #343a40;
+    }
+</style>

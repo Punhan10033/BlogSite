@@ -1,0 +1,15 @@
+﻿@model DTO.UserDto.UserUpdateDto
+<div class="grid-container">
+	<div class="sidebar">
+		<button id="menu-btn">☰</button>
+		<div class="button-group">
+			<img src="~/images/userimages/@Model.UserImage" alt="Image" class="rounded-pill1">
+			<a class="sidebar-btn" href="/UserDefault/UpdateUser/@Model.UserId">Edit Profile</a>
+			<a class="sidebar-btn" href="/UserDefault/Chat">Messages (@ViewBag.MessageCount)</a>
+			<a class="sidebar-btn" href="">My Blogs</a>
+			<a class="sidebar-btn" href="">Friends</a>
+			<a href="" id="log-out" style="background-color: transparent !important;color: black;">Log Out</a>
+		</div>
+
+	</div>
+</div>

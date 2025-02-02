@@ -1,0 +1,93 @@
+﻿@using DTO.UserDto
+@model RegistrationDto
+@{
+	Layout = "/Views/Shared/UserLayout.cshtml";
+}
+
+
+<section class="main-content-w3layouts-agileits">
+	<div class="container">
+		<h3 class="tittle">Register Now</h3>
+		@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+		{
+			if (ViewBag.Message != null)
+			{
+				<div class="alert alert-success">
+					<strong>Success!</strong>@ViewBag.Message
+				</div>
+			}
+		}
+		else
+		{
+			<div class="inner-sec">
+				<div class="login p-5 bg-light mx-auto mw-100">
+					<div class="text-danger validationcls" asp-validation-summary="All"></div>
+					<form asp-controller="Authorization" asp-action="Registration" method="post">
+						@if (ViewBag.Message != null)
+						{
+							<div class="alert alert-danger">
+								<strong>Error!</strong>@ViewBag.Message
+							</div>
+						}
+
+						<div class="form-row">
+							<div class="col-md-4 mb-3">
+								<label for="validationCustom01">First name</label>
+								<input type="text" asp-for="FirstName" class="form-control" id="validationDefault01" placeholder="" required="">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="validationCustom02">Last name</label>
+								<input type="text" asp-for="LastName" class="form-control" id="validationDefault02" placeholder="" required="">
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="validationCustom02">Birth </label>
+								<input type="date" onchange="formatDate()" id="date" asp-for="Birth" pattern="DD/MM/YYYY"  placeholder="dd-mm-yyyy" class="form-control"   required="">
+							</div>
+
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+								<label asp-for="Authentication.Email" class="mb-2">Email</label>
+								<input type="email" asp-for="Authentication.Email" class="form-control" placeholder="" required="">
+							</div>
+							<div class="form-group col-md-4">
+								<label asp-for="Authentication.Password" class="mb-2">Password</label>
+								<input type="password" asp-for="Authentication.Password" class="form-control" id="password1" placeholder="" required="">
+							</div>
+							<div class="form-group col-md-4">
+								<label asp-for="Authentication.ConfirmPassword" class="mb-2">Confirm Password</label>
+								<input type="password" asp-for="Authentication.ConfirmPassword" class="form-control" id="password2" placeholder="" required="">
+							</div>
+						</div>
+						<div class="form-row ">
+							<div class="form-group col-md-5">
+								<label style="margin:0 auto" class="mb-2">Select Country</label>
+								<select class="form-control forborder" asp-for="CountryId" asp-items="@(@ViewBag.Countries)"></select>
+							</div>
+							<div class="form-group col-md-5">
+								<input style="margin-left:80px;margin-top: 32px !important;" type="submit" value="Register" id="idh1" class="btn btn-primary  mb-2">
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		}
+	</div>
+</section>
+
+
+
+<style>
+	.validationcls {
+		margin-top: -1vw;
+		margin-bottom: 3vw;
+		margin-left: 28vw
+	}
+</style>
+
+<script>
+	  function formatDate() {
+    var date = new Date(document.getElementById("date").value);
+    var options = { day: '2-digit', month: '2-digit', year: 'numeric'};
+    document.getElementById("date").value = date.toLocaleDateString("en-GB", options);
+</script>

@@ -1,0 +1,526 @@
+﻿@using Entities;
+@model DTO.UserDto.UserToListDto
+
+@{
+	ViewData["Title"] = "Messages";
+	Layout = "~/Views/Shared/ProfileLayout.cshtml";
+	Message2 m = new Message2();
+	m.ReceieverId = ViewBag.ReceieverId;
+}
+
+<div class="container chat_ctn">
+	<div class="message_section">
+		@if (Model.UserReceiever != null)
+		{
+			<div class="row" style="background-color: rgb(32, 31, 31); margin-left: 0 !important;">
+				<div class="col-md-12">
+					<div class="user_header">
+						@if (Model.UserImage != null)
+						{
+							<img id="receiever_img" src="~/images/@Model.UserImage" alt="">
+						}
+						else
+						{
+							<img id="receiever_img" src="~/images/1.jpg" alt="">
+						}
+						<h6>@Model.FirstName @Model.LastName</h6>
+					</div>
+				</div>
+			</div>
+		}
+		<div onload="SubmitMessage()" id="messageContainer" class="chat_users">
+			<partial name="_ChatPartialView" model="Model"></partial>
+		</div>
+		<div class="row end_row" style="margin-left: 0 !important;">
+			@if (Model.UserReceiever != null)
+			{
+				<form id="messageform">
+					<div class="col-md-9 ">
+						<div class="form-group send_data">
+							<input type="hidden" id="txt_sender" name="SenderId" asp-for="@m.SenderId" />
+							<input type="hidden" id="txt_receiever" name="ReceieverId" asp-for="@m.ReceieverId" />
+							<textarea name="Subject" onkeyup="showSubmitButton()" id="text_area" class="form-control" rows="1">@m.Subject</textarea>
+							<button id="addBtn" class="btn btn-submit" style="background-color: white;height: 2.6rem;margin-top: 7px;"
+								onclick="SubmitMessage()" type="button">
+								Send
+							</button>
+						</div>
+					</div>
+				</form>
+			}
+		</div>
+	</div>
+	<div class="friend_list_bar">
+		<div class="wrapper mb-4">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="friends_header">
+						<h5 id="friends_h5">Chats</h5>
+						<button id="icon_btn">
+							<i id="icon_search" class="fas fa-search"></i>
+							<i id="icon_close" class="fas fa-times"></i>
+						</button>
+					</div>
+					<input id="search_friends" type="text">
+				</div>
+			</div>
+		</div>
+		<div id="fill_data">
+			@await Component.InvokeAsync("FriendBar")
+		</div>
+	</div>
+</div>
+
+<script>
+
+
+	var friend_search = document.getElementById('search_friends');
+	var refreshIntervalId = null;
+
+	// Define a function to refresh the friend bar using AJAX
+	function refreshFriendBar() {
+		// Store the interval ID returned by setInterval() in a variable
+		refreshIntervalId = setInterval(function () {
+			$.ajax({
+				url: "/UserDefault/RefreshChatComponent",
+				type: "GET",
+				data: { filter: null },
+				success: function (result) {
+					$("#fill_data").html("");
+					$("#fill_data").html(result);
+					console.log("Friend bar updated!");
+				},
+				error: function (xhr, status, error) {
+					console.error("Error occurred while refreshing friend bar: " + error);
+				}
+			});
+		}, 2000);
+	}
+
+	// Define a function to stop the refresh interval
+	function stopRefresh() {
+		// If the interval is currently running, clear it using clearInterval()
+		if (refreshIntervalId !== null) {
+			clearInterval(refreshIntervalId);
+			refreshIntervalId = null;
+		}
+	}
+
+	// If the search box is empty, start refreshing the friend bar automatically
+	if (!friend_search.value) {
+		refreshFriendBar();
+	}
+
+	// Add a keyup event listener to the search box
+	friend_search.addEventListener('keyup', function () {
+		// Stop the refresh interval if it's currently running
+		stopRefresh();
+
+		// Get the current search box value and use it to filter the friend list using AJAX
+		var filter = friend_search.value;
+		$.ajax({
+			url: "/UserDefault/RefreshChatComponent",
+			type: "GET",
+			data: { filter: filter },
+			success: function (result) {
+				$("#fill_data").html("");
+				$("#fill_data").html(result);
+				console.log("Friend bar updated!");
+			},
+			error: function (xhr, status, error) {
+				console.error("Error occurred while refreshing friend bar: " + error);
+			}
+		});
+	});
+
+	//Get LastChats
+
+
+
+	const icon_btn = document.getElementById('icon_btn');
+	const icon_search = document.getElementById('icon_search');
+	const icon_close = document.getElementById('icon_close');
+	const header = document.getElementById('friends_h5');
+	const friends_input = document.getElementById('search_friends');
+
+
+
+	icon_btn.addEventListener("click", function (e) {
+		e.preventDefault();
+		if (window.getComputedStyle(header).display === "none" && window.getComputedStyle(icon_search).display === "none") {
+			refreshFriendBar();
+			header.style.opacity = 1;
+			icon_search.style.opacity = 1;
+			icon_search.classList.remove("transition_left");
+			icon_close.classList.toggle("transition_left");
+			icon_search.style.transition = "opacity 1s";
+			icon_close.style.opacity = 0;
+			friends_input.style.transition = "opacity 1s";
+			friends_input.style.opacity = 0;
+			setTimeout(function () {
+				header.style.display = "block";
+				icon_search.style.display = "block";
+				icon_close.style.display = "none";
+				icon_btn.style.marginLeft = "0";
+				friends_input.style.display = "none";
+
+			}, 450);
+		}
+		else {
+			header.style.transition = "opacity 1s";
+			icon_search.style.transition = "opacity 1s";
+			header.style.opacity = 0;
+			icon_search.style.transition = "opacity 1s";
+			icon_search.style.opacity = 0;
+			icon_close.style.opacity = 1;
+			icon_close.classList.remove("transition_left");
+			icon_search.classList.toggle("transition_left");
+			icon_close.style.transition = "opacity 1s"
+			friends_input.style.transition = "opacity 1s";
+			friends_input.style.opacity = "1";
+			setTimeout(function () {
+				header.style.display = "none";
+				icon_search.style.display = "none";
+				icon_close.style.display = "block";
+				icon_btn.style.marginLeft = "67px";
+				friends_input.style.display = "block";
+			}, 400);
+		}
+	});
+
+
+	var objDiv = document.getElementById("messageContainer");
+	objDiv.scrollTop = objDiv.scrollHeight;
+
+	//Sending message with enter button
+	const form = document.querySelector('#messageform');
+	const textarea = document.querySelector('#text_area');
+
+	if (textarea.value !== null || !(/^\s*$/.test(textarea))) {
+		textarea.addEventListener('keydown', function (event) {
+			if (event.keyCode === 13 && !event.shiftKey) {
+				event.preventDefault(); // prevent creating		a new line
+				var data = $("#messageform").serialize();
+				$.ajax({
+					type: 'POST',
+					url: '/Message/SendMessage',
+					contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+					data: data,
+					success: function (result) {
+						$("#messageContainer").html("");
+						$("#messageContainer").html(result);
+						$("#messageform")[0].reset(); // reset
+					},
+					error: function () {
+						alert(101);
+					}
+				})
+			}
+		});
+	}
+	//Sending message with enter button
+
+
+
+
+	// If Receiever is not null get chat of users
+	const receieverId = $("#txt_receiever").val();
+	if (receieverId !== null) {
+
+		function getChat(receieverId) {
+			var data = { receieverId: receieverId };
+			$.ajax({
+				type: 'GET',
+				url: '/Message/GetChat',
+				data: data,
+				success: function (result) {
+					$("#messageContainer").html(result);
+					var containerHeight = $('#messageContainer').prop('scrollHeight');
+					$('#messageContainer').scrollTop(containerHeight);
+				},
+				error: function () {
+					console.log('Error fetching messages');
+				},
+				complete: function () {
+					setTimeout(function () { getChat(receieverId); }, 1000);
+				}
+			});
+		};
+		getChat(receieverId);
+	}
+	// If Receiever is not null get chat of users
+
+	var textarea_comment = document.getElementById("text_area");
+	var button_add_comment = document.getElementById("addBtn");
+
+	textarea_comment.addEventListener("input", function () {
+		if (/\S/.test(textarea_comment.value)) {
+			button_add_comment.style.display = "block";
+		} else {
+			button_add_comment.style.display = "none";
+		}
+	});
+
+
+
+	function SubmitMessage() {
+		if (textarea.val !== null || input.trim() === "") {
+			var data = $("#messageform").serialize();
+			$.ajax({
+				type: 'POST',
+				url: '/Message/SendMessage',
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // when we use .serialize() this generates the data in query string format. this needs the default contentType (default content type is: contentType: 'application/x-www-form-urlencoded; charset=UTF-8') so it is optional, you can remove it
+				data: data,
+				success: function (result) {
+					$("#messageContainer").html("");
+					$("#messageContainer").html(result);
+					$("#messageform")[0].reset(); // reset
+					button_add_comment.style.display = "none";
+				},
+				error: function () {
+				}
+			})
+		}
+	};
+	//	AJAX FUNCTION TO SEND MESSAGE
+
+
+
+
+</script>
+
+
+<style>
+
+	#addBtn {
+		display: none;
+	}
+
+	.message_section {
+		width: 100% !important;
+		background-color: gray;
+	}
+
+
+	.user_header {
+		background-color: rgb(143, 139, 139);
+		width: fit-content;
+		border-bottom-right-radius: 1vw;
+		display: flex;
+	}
+
+	#receiever_img {
+		margin: 15px;
+		margin-top: 10px !important;
+		width: 3rem;
+		height: 2.6rem;
+	}
+
+
+	.user_header h6 {
+		color: white;
+		padding-right: 30px;
+		margin: 25.5px 4px;
+		font-family: sans-serif;
+	}
+
+	.chat_users {
+		overflow-y: auto;
+		height: 23vw;
+	}
+
+	.receiever_text {
+		border-radius: 1vw;
+		width: fit-content;
+		max-width: 100%;
+		word-wrap: break-word;
+		padding: 10px;
+		white-space: normal;
+		color: white;
+		background-color: #424242;
+	}
+
+	.sender_div {
+		margin: 10px;
+	}
+
+	.sender_text {
+		border-radius: 1vw;
+		width: fit-content;
+		max-width: 100%;
+		word-wrap: break-word;
+		padding: 10px;
+		float: right;
+		white-space: normal;
+		background-color: #ffffff;
+	}
+
+	.end_row {
+		background-color: rgb(32, 31, 31);
+	}
+
+	.send_data {
+		display: flex;
+	}
+
+	#text_area {
+		width: 60%;
+		resize: none;
+		margin-right: 40px;
+		margin-left: 70px;
+	}
+
+	.chat_ctn {
+		display: flex;
+		max-width: 80vw !important;
+		min-width: 80vw !important;
+		margin-top: 40px;
+	}
+
+	.friend_list_bar {
+		background-color: #424242;
+		color: white;
+		min-width: 23%;
+		margin-left: 20px;
+	}
+
+	.wrapper {
+		-webkit-box-shadow: -9px 8px 9px 0px rgba(0, 0, 0, 0.75);
+		-moz-box-shadow: -9px 8px 9px 0px rgba(0, 0, 0, 0.75);
+		box-shadow: -9px 8px 9px 0px rgba(0, 0, 0, 0.75);
+		background-color: #757575;
+	}
+
+	.for_friends_list {
+		margin-left: -10px;
+	}
+
+	#icon_search {
+		transition: 1s ease-in-out;
+	}
+
+	#icon_btn {
+		border: none;
+		background-color: transparent;
+		padding: 0;
+		cursor: pointer;
+		outline: inherit;
+		position: relative;
+		color: white;
+		left: 8vw;
+		margin-top: -10px;
+	}
+
+	#icon_close {
+		display: none;
+		transition: 0.4s ease-in-out !important;
+	}
+
+	.close_icon_right {
+		margin-left: 10px;
+	}
+
+	.friends_h5_transition {
+		margin-left: -10px !important;
+		transition: 0.4s ease;
+	}
+
+	#close_icon {
+		display: none;
+	}
+
+	.transition_right {
+		margin-left: 20px;
+		transition: 1s ease-in-out;
+	}
+
+	.transition_left {
+		margin-left: -20px;
+		transition: 0.4s ease-in-out !important;
+	}
+
+	.transition_class {
+		margin-left: 20px !important;
+		transition: 0.4s ease-in-out !important;
+	}
+
+	.input_friends {
+		margin-left: 20px;
+		transition: 1s ease-in-out;
+	}
+
+	#search_friends {
+		border-radius: 1vw;
+		padding-left: 10px;
+		width: 80%;
+		font-size: 1rem;
+		margin-left: -10px;
+		padding-right: 10px;
+		margin-top: -47px;
+		display: none;
+	}
+
+	.friends_chatt {
+		margin-left: -7px;
+		-webkit-box-shadow: -13px 12px 9px 0px rgba(0, 0, 0, 0.75);
+		-moz-box-shadow: -13px 12px 9px 0px rgba(0, 0, 0, 0.75);
+		box-shadow: -13px 12px 9px 0px rgba(0, 0, 0, 0.75);
+		background-color: #757575;
+		border-bottom-right-radius: 1vw;
+		border-top-right-radius: 1vw;
+		display: flex;
+		height: 3rem;
+	}
+
+	.friend_name1 {
+		padding-right: 5px;
+		height: 0.2rem;
+		margin-right: 7px;
+		margin-top: 12px;
+	}
+
+	.friend_name2 {
+		width: 100%;
+		height: 0.2rem;
+		margin-top: 7px;
+	}
+
+	.friends_chatt p {
+		margin-left: -240px;
+		font-size: 0.78rem;
+		margin-top: 27px;
+	}
+
+
+
+
+	.col-md-12 a {
+		color: white;
+		text-decoration: none;
+	}
+
+		.col-md-12 a:hover {
+			color: wheat;
+			text-decoration: none;
+		}
+
+
+	.friends_header {
+		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		min-height: 3.4rem;
+		max-width: 2.3rem;
+		padding: 10px;
+		display: flex;
+	}
+
+	#receiever_image {
+		max-width: 3rem;
+		margin-left: 10px;
+		padding: 6px;
+		margin-top: 3px;
+		min-width: 3rem;
+		max-height: 2.8rem;
+		min-height: 2.8rem;
+	}
+
+</style>

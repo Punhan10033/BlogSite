@@ -1,0 +1,134 @@
+﻿@using Entities
+@model List<Comment>
+@if (Model.Count > 0)
+{
+	<h4>@Model.Count Comments </h4>
+	@foreach (var item in Model)
+	{
+		<div class="media mb-4 mt-4 medi1 row">
+			<img src="~/images/userimages/@item.User.UserImage" alt="" class="img1 img-fluid">
+			<div class="cls1 media-body col">
+				<div style="display:flex;">
+					<h5 class="mt-0">@item.CommentUserName</h5>
+					@{
+						var timespan = DateTime.Now - item.WritedAt;
+						string time = "";
+						if (timespan.Days > 365)
+						{
+							int years = (timespan.Days / 365);
+							if (timespan.Days % 365 != 0)
+							{
+								years += 1;
+								time = $"{years} year{(years == 1 ? "" : "s")} ago";
+							}
+						}
+						else if (timespan.Days > 30)
+						{
+							int months = (timespan.Days / 30);
+							if (timespan.Days % 30 != 0)
+							{
+								months += 1;
+							}
+							time = $"{months} month{(months == 1 ? "" : "s")} ago";
+						}
+						else if (timespan.Days > 0)
+						{
+							time = $"{timespan.Days} day{(timespan.Days == 1 ? "" : "s")} ago";
+						}
+						else if (timespan.Hours > 0)
+						{
+							time = $"{timespan.Hours} hour{(timespan.Hours == 1 ? "" : "s")} ago";
+						}
+						else if (timespan.Minutes > 0)
+						{
+							time = $"{timespan.Minutes} minute{(timespan.Minutes == 1 ? "" : "s")} ago";
+						}
+						else if (timespan.Seconds > 5)
+						{
+							time = $"{timespan.Seconds} seconds ago";
+						}
+						else if (timespan.Seconds < 5)
+						{
+							time = "Just now";
+						}
+					}
+					<p style="margin-left:10px">@time</p>
+				</div>
+				@if (item.User.Authentication.Email.ToLower() == User.Identity.Name.ToString().ToLower())
+				{
+					<p id="paragraph" style="margin-top:-10px !important" class="paragraph1">
+						@item.CommentContent
+					</p>
+					<div class="row">
+						<div class="col-md-2 buttons">
+							<button style="border:none;font-size:1rem" class="fortext fortext1" id="delete_comment" onclick="deleteComment(@item.CommentId)" >Delete</button>
+						</div>
+					</div>
+				}
+				else
+				{
+					<p class="paragraph1">
+						@item.CommentContent
+					</p>
+				}
+				@*
+		<div class="media mt-3">
+		<a class="d-flex pr-3" href="#">
+		<img src="/images/t2.jpg" alt="" class="img-fluid">
+		</a>
+		<div class="media-body">
+		<h5 class="mt-0">Richard Spark</h5>
+		<p>
+		Lorem Ipsum convallis diam consequat magna vulputate malesuada. id dignissim sapien velit id felis ac cursus eros.
+		Cras a ornare elit.
+		</p>
+		</div>
+		</div>*@
+			</div>
+		</div>
+	}
+}
+else
+{
+	<h6>There is no comment on this blog. Add first comment </h6>
+}
+
+<style>
+
+	.fortext {
+		color: gray;
+	}
+
+	.fortext1:hover {
+		color: red;
+	}
+
+	.fortext2:hover {
+		color: darkseagreen;
+	}
+
+	.cls1 {
+		margin-left: 1vw;
+	}
+
+	.medi1 {
+		border-style: hidden
+	}
+
+	.img1 {
+		border-radius: 20px;
+		width: 5vw;
+		height: 5vw;
+	}
+
+	.paragraph1 {
+		margin-top: 1vw;
+		overflow-wrap: break-word !important
+	}
+
+	.buttons {
+		margin-bottom: 2vw;
+		margin-top: -1.5vw;
+		margin-left: 0.1vw;
+	}
+</style>

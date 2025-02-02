@@ -1,0 +1,11 @@
+﻿@using System.Security.Claims
+@model DTO.UserDto.UserUpdateDto
+@{
+	Layout = "~/Views/Shared/ProfileLayout.cshtml";
+}
+
+
+<div class="container-fluid user-profile" style="background-color: aqua;">
+@await Component.InvokeAsync("UserUpper",new {Id=Model.UserId})
+@await Component.InvokeAsync("FriendList",new {UserId=@Model.UserId})
+</div>

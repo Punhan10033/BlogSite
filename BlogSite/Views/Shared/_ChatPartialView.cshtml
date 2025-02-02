@@ -1,0 +1,50 @@
+﻿@using Entities;
+@model DTO.UserDto.UserToListDto
+
+
+@if (Model.UserReceiever != null)
+{
+	@foreach (var i in Model.UserSender.Concat(Model.UserReceiever).OrderBy(x => x.MessageDate))
+	{
+		@if (i.ReceieverId != Model.UserId)
+		{
+			<div class="row">
+				<div class="col-md-6">
+					<div>
+						<p class="receiever_text">
+							@i.Subject
+						</p>
+					</div>
+				</div>
+			</div>
+		}
+		else
+		{
+			<div class="row" style="display: flex;justify-content: right;">
+				<div class="col-md-6 sender_div">
+					<div>
+						<p class="sender_text">
+							@i.Subject
+						</p>
+					</div>
+				</div>
+			</div>
+		}
+	}
+}
+else
+{
+	<div class="row">
+		<div class="col-md-6">
+			<div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="display: flex;justify-content: right;">
+		<div class="col-md-6 sender_div">
+			<div>
+			</div>
+		</div>
+	</div>
+}
+

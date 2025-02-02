@@ -1,0 +1,105 @@
+﻿@model DTO.UserDto.UserUpdateDto
+@{
+	Layout = "~/Views/Shared/ProfileLayout.cshtml";
+}
+<div class="container-fluid user-profile">
+	@await Component.InvokeAsync("UserUpper", new {Id=Model.UserId});
+
+	<div class="container edit-profile mt-3">
+		<form asp-action="Update" asp-controller="UserDefault" enctype="multipart/form-data" asp-route-UserId="@Model.UserId">
+			<div class="row">
+				<h5 class="mt-2" id="bio">Biography</h5>
+				<div class="form-control bio-1 col-md-6 mt-2">
+					<textarea class="form-control" asp-for="Biography" placeholder="lorem" style="resize: none; " id="textAreaExample" rows="3"></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<label style="margin: 0 auto !important;  width: 51%; " class="form-label " for="customFile">Select Profile Image</label>
+				<input style="margin: 0 auto !important; width: 50%;" type="file" name="FileUpload" class="form-control" id="customFile" />
+			</div>
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<label for="">First Name</label>
+					<input class="form-control" type="text" placeholder="FirstName" name="FirstName" asp-for="FirstName">
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="">Last Name</label>
+					<input class="form-control" type="text" placeholder="LastName" name="LastName" asp-for="LastName">
+				</div>
+			</div>
+			<div class="row" id="update_user_form">
+				<div class="col-md-6 form-group">
+					<label for="">Phone Number</label>
+					<label id="phone_code" readonly class="form-control" type="text">+@Model.Country.PhoneCode</label>
+					<input id="phone_number" class="form-control" asp-for="PhoneNumber" maxlength="@Model.Country.PhoneLength" type="text" placeholder="Tel" maxlength="" name="PhoneNumber">
+				</div>
+				<div class="col-md-6 form-group">
+					<label for="">Birth </label>
+					<input class="form-control" type="date" name="Birth" asp-for="Birth" id="">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 form-group">
+					<label style="text-align: center; display: block;" for="">Country</label>
+					<select asp-items="@ViewBag.Countries" style="width:50%;margin:0 auto;text-align:center" class="form-control" id="select_list" asp-for="CountryId"></select>
+
+					@*<input style="width:50%;margin: 0 auto;" class="form-control" type="text" name="Country" asp-for="Country" id="">*@
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 form-group">
+					<a class="form-control btn " href="">Cancel</a>
+				</div>
+				<div class="col-md-6 form-group">
+					<input class="form-control btn" type="submit" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>
+
+<style>
+
+	#phone_code {
+		display: flex;
+		content: "+";
+		width: 20%;
+	}
+
+	#phone_number {
+		margin-top: -38px !important;
+		margin-left: 84px;
+		width: 80%;
+	}
+</style>
+
+
+
+<script>
+	var selectlist = document.getElementById("select_list");
+	selectlist.addEventListener("change", () => {
+		const selectedValue = selectlist.value; // note the lowercase 'l' in selectlist
+		var number_input = document.getElementById("phone_number");
+
+
+		$.ajax({
+			url: "/UserDefault/CountryByName",
+			type: "GET",
+			data: { Id: selectedValue },
+			dataType: 'json',
+			success: function (response) {
+				const country = response;
+				$("#phone_code").html("+" + country.phoneCode);
+				$("#phone_number").attr("maxlength", country.phoneLength);
+				if (number_input.value.length > country.phoneLength) {
+					number_input.value = number_input.value.slice(0, country.phoneLength);
+				}
+				console.log(country);
+
+			}
+		});
+	});
+
+
+</script>

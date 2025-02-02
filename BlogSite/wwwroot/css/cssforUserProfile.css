@@ -1,0 +1,268 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+#banner-image {
+    width: 87%;
+    margin: 0 auto;
+    height: 28vw;
+    background-color: rgb(255, 255, 255);
+    -webkit-box-shadow: -1px 5px 4px -3px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 5px 4px -3px rgba(0,0,0,0.75);
+    box-shadow: -1px 5px 4px -3px rgba(0,0,0,0.75);
+    border-radius: 1vw;
+}
+
+#img-banner {
+    width: 100%;
+    object-fit: cover;
+    object-position: 100% 10%;
+    border-radius: 1vw;
+    height: 100%;
+}
+
+
+
+
+.topbar {
+    text-align: right;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 1.6vw !important;
+}
+
+
+.ctn1 {
+    width: 25%;
+    margin: 0 auto;
+    bottom: 8vw;
+    position: relative;
+    right: 31%;
+}
+
+
+
+.profile-image {
+    width: 100%;
+}
+
+.image {
+    width: 100%;
+    height: 50vw !important;
+    margin-left: 10%;
+    padding-top: 20%;
+    border-radius: 10%;
+    background-color: white;
+}
+
+#image {
+    vertical-align: middle;
+    width: 62%;
+    border-radius: 50%;
+    margin-left: 18%;
+    min-width: 60%;
+    height: 20%;
+}
+
+.side-bar a:hover {
+    background-color: green;
+    border-radius: 1vw;
+    color: white;
+}
+
+#image-upload {
+    font-size: 1.5vw;
+    position: absolute;
+    color: rgb(65, 63, 62);
+    background-color: rgba(205, 193, 220, 0.36) !important;
+    border-radius: 100%;
+}
+
+    #image-upload:hover {
+        background-color: rgb(224, 224, 224) !important;
+    }
+
+
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10%;
+}
+
+    .side-bar a {
+        padding: 5%;
+        font-size: 1.6vw !important;
+        margin-top: 4%;
+        text-decoration: none;
+        color: black;
+    }
+
+.topbar a {
+    padding: 3%;
+    text-decoration: none;
+    color: darkslategray;
+}
+
+
+
+.bi {
+    position: relative;
+    background-color: black;
+}
+
+/* 600 PX lower and higher */
+
+.form {
+    width: 53%;
+    position: relative;
+    left: 39%;
+    bottom: 58vw !important;
+}
+
+
+form {
+    text-align: center;
+    font-size: 1.6vw !important;
+    border-radius: 1vw;
+    padding-top: 5%;
+    padding-bottom: 10%;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    display: block !important;
+}
+
+.row {
+    width: 100%;
+}
+
+    .row .col-6 {
+        padding: 1%;
+        padding-left: 10%;
+    }
+
+input {
+    height: 3vw;
+    width: 70%;
+    background-color: rgb(224, 224, 224);
+    border: none;
+    border-radius: 1vw;
+    border-bottom: solid 0.1vw;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.buttons .col-6 a {
+    text-decoration: none;
+    color: black;
+}
+
+.btn {
+    font-size: 2vw !important;
+    width: 40%;
+    padding: 10% !important;
+    height: 40%;
+    display: inline-block;
+}
+
+div .col-md-12 {
+    margin-top: 1%;
+    padding-left: 12%;
+    margin-bottom: 10%;
+    border-radius: 1vw;
+}
+
+.col-md-12 textarea {
+    border: none;
+    resize: none;
+    width: 80%;
+    height: 90%;
+    min-height: 5vw;
+    border-bottom: solid 0.01vw;
+    border-radius: 1vw;
+    padding: 1%;
+    border-top: solid 0.01vw;
+    background-color: rgb(224, 224, 224) !important;
+    overflow: hidden;
+    text-align: center;
+}
+
+.col-md-12 label {
+    font-size: 1.6vw !important;
+    margin-bottom: 4%;
+}
+
+input:focus {
+    background-color: rgb(254, 254, 254);
+    color: black;
+}
+
+.col-6 {
+    font-size: 1.6vw !important;
+    padding-top: 3% !important;
+}
+
+.details {
+    font-size: 1.3vw;
+    flex-direction: row;
+    background-color: rgb(255, 255, 255) !important;
+    border-radius: 1vw;
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+    position: relative;
+    left: 36%;
+    bottom: 58vw;
+}
+
+    .details .row {
+        padding-right: 10%;
+        padding-left: 12%;
+        padding-top: 7%;
+        padding-bottom: 5%;
+    }
+
+.col-md-12 h3 {
+    font-size: 3vw;
+}
+
+.bio-text {
+    font-size: 1.3vw;
+}
+
+li {
+    padding: 2%;
+    margin-top: 3%;
+    background-color: rgb(224, 224, 224);
+    border-radius: 1vw;
+    border-bottom: 1px solid;
+}
+
+.lst ul {
+    margin-top: -24%;
+    list-style: none;
+    margin-left: 4%;
+}
+
+
+li label {
+    padding-left: 2%;
+}
+
+.list-item div {
+    float: right;
+    margin-top: -4.4%;
+    padding-right: 2%;
+}
+
+.row .col-6 {
+    padding-top: 5%;
+}

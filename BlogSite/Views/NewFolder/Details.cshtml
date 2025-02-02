@@ -1,0 +1,75 @@
+﻿@using DTO.UserDto
+@model UserUpdateDto
+
+@{
+    Layout = "UserProfileLayout.cshtml";
+}
+
+<div id="banner-image">
+  <img id="img-banner" src="nature-g586813509_1920.jpg" alt="">
+</div>
+<div class="ctn1">
+  <div class="profile-image ">
+    <div class="image">
+    <img  src="https://turbo.azstatic.com/uploads/full/2022%2F12%2F21%2F15%2F02%2F37%2F72847e82-3ee8-4991-9c38-27b92dd9fe74%2F51201_iNDwuO3s1Fl91h_PQwRQuA.jpg#_gl=1*3muzus*_ga*MTg5NzE4NDQxMS4xNjcxNjE5ODgy*_ga_68B6PJZXYD*MTY3MzI4Mjk4My4yLjEuMTY3MzI4MzAyMy4yMC4wLjA." id="image" alt="">
+    <a class="btn-upld" id="image-upload" href="">
+      <i class="fa-sharp fa-solid fa-camera"></i>
+        </a>
+    <div class="side-bar">
+     <a href="">Profile</a>
+     <a href="">Friends</a>
+     <a href="">Messages</a>
+     <a href="">Blogs</a>
+     <a href="">Comments</a>
+    </div>
+    </div>
+  </div>
+  <div class="form">
+    <form action="">
+     <div class="row">
+        <div class="col-md-12">
+          <label for="">Biography</label>
+          <textarea name="" id="" cols="50" maxlength="150" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label for="">First Name</label>
+          <input type="text" name="" id="">
+        </div>
+        <div class="col-6">
+          <label for="">Last Name</label>
+          <input type="text" name="" id="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label for="">Phone Number</label>
+          <input type="text" name="" id="">
+        </div>
+        <div class="col-6">
+          <label for="">Birth</label>
+          <input type="text" name="" id="">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label for=""> E-mail</label>
+          <input type="email" name="" id="">
+        </div>
+        <div class="col-6">
+          <label for="">Country</label>
+          <input  type="text" name="" id="">
+        </div>
+      </div>
+      <div class="row buttons">
+        <div class="col-6">
+          <a class="text-danger " href="">Cancel</a>
+        </div>
+        <div class="col-6">
+          <a class="text-success" href="">Save</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

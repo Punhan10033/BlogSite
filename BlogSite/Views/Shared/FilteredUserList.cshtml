@@ -1,0 +1,32 @@
+﻿@model List<DTO.UserDto.UserToListDto>
+
+<div id="fill_data">
+	@foreach (var u in Model)
+	{
+		<div class="row">
+			<div class="col-md-12 for_friends_list">
+				<a href="/UserDefault/Chat/@u.UserId">
+					<div class="friends_chatt">
+						<img id="receiever_image" src="~/images/3.jpg" alt="">
+						@if (u.FirstName.Length + u.LastName.Length > 21)
+						{
+							var fullname = u.FirstName + " " + u.LastName;
+							<h6 class="friend_name1" id="receiever_name">@fullname.Remove(Math.Abs(fullname.Length-22))</h6>
+						}
+						else if (u.UserSender.Any(x => x.SenderId == u.UserId && x.MessageStatus == false))
+						{
+							<h6 class="friend_name2" id="receiever_name">@u.FirstName @u.LastName</h6>
+							<p><strong>Unread Messages (@u.UserSender.Where(x=>x.SenderId==u.UserId && x.MessageStatus ==false).Count())</strong></p>
+
+						}
+						else
+						{
+							<h6 class="friend_name1" id="receiever_name">@u.FirstName @u.LastName</h6>
+
+						}
+					</div>
+				</a>
+			</div>
+		</div>
+	}
+</div>

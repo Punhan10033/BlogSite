@@ -1,0 +1,149 @@
+﻿@using Entities
+@using Microsoft.AspNetCore.Identity
+<div class="col top-forms text-center mt-lg-3 mt-md-1  ">
+	@if (ViewBag.UserName)
+	{
+		<div class="dropdown">
+			<label onmouseover="myFunction()" class="dropbtn">@User.Identity.Name.ToUpper()</label>
+			<div id="myDropdown" class="dropdown-content">
+				<a class="ahref" href="/UserDefault/Index">Manage</a>
+				<a class="ahref" href="/Authorization/LogOut">Log Out</a>
+			</div>
+		</div>
+	}
+	else
+	{
+		<span class=" spn1">
+			<a class="signin1" href="/Authorization/Login">
+				<i class="fas fa-lock"></i> Sign In
+			</a>
+			<a href="/Authorization/Registration">
+				<i class="far fa-user"></i> Register
+			</a>
+		</span>
+	}
+</div>
+<style>
+	.signin1 {
+		margin-right: 2vw;
+	}
+	.spn1{
+		margin-right:31vw;
+	}
+
+	.logorreg {
+		border: none;
+	}
+
+	.ahref:hover {
+		color: white;
+		background-color: #01cd74 !important;
+		border-radius: 25px;
+	}
+
+	.dropbtn {
+		background-color: white;
+		color: black;
+		padding: 16px;
+		font-size: 16px;
+		border: none;
+		cursor: pointer;
+		border-radius: 25px;
+		margin-left: 31vw;
+	}
+	.dropbtn:active{
+		outline:none !important;
+		border:none !important;
+	}
+
+		/* Dropdown button on hover & focus */
+		.dropbtn:hover, .dropbtn:focus {
+			background-color: #01cd74;
+			color: white;
+		}
+
+	/* The container <div> - needed to position the dropdown content */
+	.dropdown {
+		position: relative;
+		display: inline-block;
+	}
+
+	/* Dropdown Content (Hidden by Default) */
+	.dropdown-content {
+		display: none;
+		position: absolute;
+		background-color: #f1f1f1;
+		min-width: 200px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		z-index: 1;
+		margin-left: 32vw;
+		border-radius: 20px;
+		margin-top: -0.1vw;
+	}
+
+		/* Links inside the dropdown */
+		.dropdown-content a {
+			color: black;
+			padding: 12px 16px;
+			text-decoration: none;
+			display: block;
+		}
+
+			/* Change color of dropdown links on hover */
+			.dropdown-content a:hover {
+				background-color: #ddd;
+			}
+
+	/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+	.show {
+		display: block;
+	}
+
+	.username {
+		width: 36vw;
+		position: absolute;
+	}
+
+		.username:hover {
+			background-color: #01cd74;
+			border-radius: 25px;
+		}
+
+			.username:hover .logorreg {
+				color: white !important;
+			}
+
+			.username:hover .fa-sign-out-alt {
+				color: white !important;
+			}
+
+</style>
+<script>
+		function myFunction() {
+	  document.getElementById("myDropdown").classList.toggle("show");
+	}
+
+	// Close the dropdown menu if the user clicks outside of it
+	window.ondblclick = function(event) {
+	  if (!event.target.matches('.dropbtn')) {
+		var dropdowns = document.getElementsByClassName("dropdown-content");
+		var i;
+		for (i = 0; i < dropdowns.length; i++) {
+		  var openDropdown = dropdowns[i];
+		  if (openDropdown.classList.contains('show')) {
+			openDropdown.classList.remove('show');
+		  }
+		}
+	  }
+	}
+</script>
+
+
+@*<div id="username" class="username mt-1 dropdown" style="">
+	<button class="logorreg dropbtn" id="logorreg" style="font-size:20px">Welcome Back @User.Identity.Name.ToUpper() </button>
+	<div class="dropdown-content">
+	<a rel="noopener" target="_blank" href="">Manage</a>
+	<a rel="noopener" target="_blank" href="">Details</a>
+	<a rel="noopener" target="_blank" href="/Authorization/LogOut">Log Out</a>
+	</div>
+	</div>*@

@@ -1,0 +1,161 @@
+﻿@model List<Entities.Notification>
+
+
+<div id="dropdown_notification" class="dropdown">
+	<button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+			 class="bi bi-bell-fill" viewBox="0 0 16 16">
+			<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+		</svg>
+	</button>
+
+	<ul style=" margin-left: -270px !important;" class="dropdown-menu">
+		@foreach (var n in Model)
+		{
+
+
+			var timespan = DateTime.Now - n.NotificationDate;
+			string time = "";
+			if (timespan.Days > 365)
+			{
+				int years = (timespan.Days / 365);
+				if (timespan.Days % 365 != 0)
+				{
+					years += 1;
+					time = $"{years} year{(years == 1 ? "" : "s")} ago";
+				}
+			}
+			else if (timespan.Days > 30)
+			{
+				int months = (timespan.Days / 30);
+				if (timespan.Days % 30 != 0)
+				{
+					months += 1;
+				}
+				time = $"{months} M";
+			}
+			else if (timespan.Days > 0)
+			{
+				time = $"{timespan.Days} D";
+			}
+			else if (timespan.Hours > 0)
+			{
+				time = $"{timespan.Hours} hr{(timespan.Hours == 1 ? "" : "s")} ago";
+			}
+			else if (timespan.Minutes > 0)
+			{
+				time = $"{timespan.Minutes} m";
+			}
+			else if (timespan.Seconds > 5)
+			{
+				time = $"{timespan.Seconds}s";
+			}
+			else if (timespan.Seconds < 5)
+			{
+				time = "Just now";
+			}
+
+			@if (n.NotificationType == "Message")
+			{
+				<li>
+					<a class="dropdown-item" href="#">
+						<img id="receiever_image22" src="~/images/2.jpg" alt="">
+						<p>@n.NotificationDetails </p>
+						<p id="time_1">@time</p>
+					</a>
+				</li>
+			}
+			else
+			{
+
+				<li>
+					<a class="dropdown-item" href="#">
+						<p>Someone Sent you Message </p>
+						<p>@time</p>
+					</a>
+				</li>
+			}
+		}
+
+	</ul>
+
+</div>
+
+<style>
+
+	#dropdown_notification {
+		right: 2%;
+	}
+
+		#dropdown_notification button {
+			width: 100%;
+			background-color: #424242;
+		}
+
+	ul #receiever_image22 {
+		border-radius: 1vw;
+		max-width: 3rem;
+		min-width: 3rem;
+		max-height: 3rem;
+		min-height: 3rem;
+	}
+
+	#dropdown_notification ul {
+		background-color: gray;
+		text-align: center;
+		min-width: 21rem !important;
+	}
+
+		#dropdown_notification ul li {
+			padding: 10px;
+			border-bottom: solid 1px rgb(177, 183, 188);
+			border-radius: 1vw;
+		}
+
+			#dropdown_notification ul li a {
+				padding: 10px;
+				border-radius: 1vw;
+				padding-right: 10px;
+				color: white !important;
+				font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			}
+
+				#dropdown_notification ul li a p {
+					margin-left: 10px;
+					display: inline;
+				}
+
+				#dropdown_notification ul li a:focus {
+					background-color: white !important;
+				}
+
+
+				#dropdown_notification ul li a:hover {
+					color: black !important;
+				}
+
+	#time_1 {
+		font-size: 0.77rem;
+		padding-right: 10px;
+	}
+</style>
+
+
+<script>
+	var dropdownBtn = document.getElementsByClassName("dropbtn")[0];
+
+	// When the user clicks on the button, show the dropdown
+	dropdownBtn.onclick = function () {
+		document.getElementsByClassName("dropdown-content")[0].classList.toggle("show");
+	}
+
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function (event) {
+		if (!event.target.matches('.dropbtn')) {
+			var dropdown = document.getElementsByClassName("dropdown-content")[0];
+			if (dropdown.classList.contains('show')) {
+				dropdown.classList.remove('show');
+			}
+		}
+	}
+</script>

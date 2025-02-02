@@ -1,0 +1,331 @@
+﻿@using DTO.BlogDto
+@model BlogCommentsDto
+@{
+    Layout = "/Views/Shared/UserLayout.cshtml";
+}
+<section class="banner-bottom">
+    <!--/blog-->
+    <div class="container">
+        <div class="row">
+            <!--left-->
+            <div class="col-lg-8  text-left">
+                <div class="blog-grid-top">
+                    <div class="b-grid-top">
+                        <div class="carousel">
+
+                            <div class="carousel-inner">
+                                    @for (int i = 0; i < Model.Blog.BlogImages.Count(); i++)
+                                    {
+                                        <div class="carousel-item active">
+                                            <img src="~/images/blogimages/@Model.Blog.BlogImages[i].PictureName" alt="Image 1">
+                                        </div>
+                                    }
+                            </div>
+                            <button class="carousel-control prev" onclick="moveSlide(-1)">&#10094;</button>
+                            <button class="carousel-control next" onclick="moveSlide(1)">&#10095;</button>
+                        </div>
+                        <div class="blog-info-middle">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <i class="far fa-calendar-alt"></i> @Model.Blog.CreatedAt.ToString("dd-MMM-yyyy")
+                                    </a>
+                                </li>
+                                <li class="mx-2">
+                                    <a id="likebutton" data-blog-id="@Model.Blog.BlogId" href="#">
+                                        <i class="far fa-thumbs-up"></i> 201 Likes
+                                    </a>
+                                </li>
+                                @*<li>
+                                <a href="#">
+                                <i class="far fa-comment"></i> @Model.Blog.Comments.Count();
+                                </a>
+                                </li>*@
+
+                            </ul>
+                        </div>
+                    </div>
+                    <script>
+                        let currentSlide = 0;
+
+                        function moveSlide(direction) {
+                            const slides = document.querySelectorAll('.carousel-item');
+                            const totalSlides = slides.length;
+                            slides[currentSlide].classList.remove('active');
+
+                            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+
+                            slides[currentSlide].classList.add('active');
+                        }
+                    </script>
+                    <h3>
+                        <a href="single.html">@Model.Blog.BlogTitle </a>
+                    </h3>
+                    <p>@Model.Blog.BlogContent</p>
+                </div>
+                <div id="comment_topp" class="comment-top">
+                    <div id="list_comments">
+                        @await Component.InvokeAsync("CommentList", new { Id = @Model.Blog.BlogId })
+                    </div>
+                    @await Html.PartialAsync("/Views/Shared/AddCommentPartial.cshtml")
+                </div>
+
+            </div>
+
+            <!--//left-->
+            <!--right-->
+            <aside class="col-lg-4 agileits-w3ls-right-blog-con text-right">
+                <div class="right-blog-info text-left">
+                    <div class="tech-btm">
+                        <img src="/images/banner1.jpg" class="img-fluid" alt="">
+                    </div>
+                    <div class="tech-btm">
+                        <h4>Sign up to our newsletter</h4>
+                        <p>Pellentesque dui, non felis. Maecenas male </p>
+                        <form action="#" method="post">
+                            <input type="email" placeholder="Email" required="">
+                            <input type="submit" value="Subscribe">
+                        </form>
+
+                    </div>
+                    @await Component.InvokeAsync("CategoryList")
+                    @await Component.InvokeAsync("WriterLastBlogs", new { Id = @Model.Blog.UserId })
+
+                    <div class="single-gd my-5 tech-btm">
+                        <h4>Our Progress</h4>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="single-gd tech-btm">
+                        <h4>Recent Post</h4>
+                        <div class="blog-grids">
+                            <div class="blog-grid-left">
+                                <a href="single.html">
+                                    <img src="/images/b1.jpg" class="img-fluid" alt="">
+                                </a>
+                            </div>
+                            <div class="blog-grid-right">
+                                <h5>
+                                    <a href="single.html">Pellentesque dui, non felis. Maecenas male</a>
+                                </h5>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!--//right-->
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+
+
+    //ADD Comment and get data
+
+    var button_add_comment = document.getElementById("add_comment");
+    var input_comment = document.getElementById("content21");
+    input_comment.addEventListener("input", function () {
+        if (/\S/.test(input_comment.value)) {
+            button_add_comment.disabled = false;
+        } else {
+            button_add_comment.disabled = true;
+        }
+
+    });
+
+    button_add_comment.addEventListener("click", function () {
+        if (!button_add_comment.disabled) {
+            var data = $("#comment_form").serialize();
+            $.ajax({
+                url: "/Comments/AddComment",
+                type: "POST",
+                data: data,
+                dataType: "html",
+                success: function (result) {
+                    $("#list_comments").html(result);
+                    console.log("Comment Added");
+                    // code to handle successful response
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                    console.log(status);
+                    console.log(error);
+                }
+            });
+        }
+
+    });
+
+
+    //Delete Withouth refreshing
+    function deleteComment(Id) {
+        $.ajax({
+            url: "/Comments/DeleteConfirm",
+            data: { Id: Id },
+            type: "DELETE",
+            dataType: "html",
+            success: function (result) {
+                $("#list_comments").html(result);
+                button_add_comment.disabled = false;
+                console.log("Comment deleted succesfully");
+            },
+            erorr: function (xhr, status, error) {
+                console.log(xhr.responseText);
+                console.log(status);
+                console.log(error);
+            }
+
+        });
+
+    };
+
+
+
+
+    //Reset Input
+    var button_add_comment = document.getElementById("add_comment");
+    button_add_comment.addEventListener("click", function () {
+        $("#comment_form")[0].reset();
+        button_add_comment.disabled = true;
+    });
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const likeButton = document.querySelector('#likebutton');
+
+        likeButton.addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent default anchor behavior
+
+            const blogId = @Model.Blog.BlogId; // Get the blog ID from the data attribute
+            const token = document.querySelector('input[name="__RequestVerificationToken"]').value; // Get anti-forgery token
+
+            // Make sure blogId is being fetched correctly
+            console.log(`BlogId to be sent: ${blogId}`);
+
+            fetch(`@Url.Action("LikeBlog", "UserDefault")`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'RequestVerificationToken': token // Include anti-forgery token
+                },
+                body: JSON.stringify({ BlogId: blogId }) // Send BlogId in the request body
+            })
+                .then(response => response.json()) // Parse JSON response
+                .then(data => {
+                    if (data.success) {
+                        // Update the like count in the UI
+                        document.querySelector('.like-count').textContent = data.likes + ' Likes';
+                    } else {
+                        // Handle failure
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing your request. Please try again.');
+                });
+        });
+    });
+
+
+</script>
+
+<style>
+    body {
+        background-image: url('WIN_20241103_01_16_31_Pro.jpg'); /* Replace with the path to your image */
+    }
+
+    .carousel-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .carousel {
+        position: relative;
+        width: 80%;
+        max-width: 800px;
+        margin: 50px auto;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    .carousel-inner {
+        display: flex;
+        transition: transform 0.5s ease;
+    }
+
+    .carousel-item {
+        min-width: 100%;
+        display: none; /* Hide all slides initially */
+    }
+
+        .carousel-item.active {
+            display: block; /* Show the active slide */
+        }
+
+        .carousel-item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+    .carousel-control {
+        position: absolute;
+        top: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%; /* Make the button circular */
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        transform: translateY(-50%);
+    }
+
+    .prev {
+        left: 10px;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .next {
+        right: 10px;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .carousel-control:focus {
+        outline: none;
+    }
+</style>

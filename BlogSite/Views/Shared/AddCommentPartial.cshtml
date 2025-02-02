@@ -1,0 +1,24 @@
+﻿@using DTO.BlogDto
+@model BlogCommentsDto
+	<h4>Leave a Comment</h4>
+	<div class="comment-bottom">
+		<form id="comment_form" method="post">
+			<input class="form-control content21" placeholder="Add Comment ..." id="content21" style="color:black;" type="text" asp-for="Comment.CommentContent" required="">
+
+			@Html.HiddenFor(m => m.Blog.BlogId,new{Id="blog_id"})
+			<button disabled id="add_comment" type="button" class="btn btn-primary submit">Add</button>
+		</form>
+	</div>
+
+<style>
+	.content21 {
+		border-color: black !important;
+	}
+</style>
+
+
+
+<script>
+
+
+</script>

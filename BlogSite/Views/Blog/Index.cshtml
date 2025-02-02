@@ -1,0 +1,323 @@
+﻿@using Entities
+@model List<Blog>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="bottom-slider">
+    <div class="course_demo1">
+        <ul id="flexiselDemo1">
+            <li>
+                <div class="blog-item">
+                    <img src="/images/1.jpg" alt=" " class="img-fluid" />
+                    <button type="button" class="btn btn-primary play" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-play"></i>
+                    </button>
+
+                    <div class="floods-text">
+                        <h3>
+                            The fed and inequality
+                            <span>
+                                Blogger
+                                <label>|</label>
+                                <i>Adom Smith</i>
+                            </span>
+                        </h3>
+
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="blog-item">
+                    <img src="/images/2.jpg" alt=" " class="img-fluid" />
+                    <button type="button" class="btn btn-primary play" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-play"></i>
+                    </button>
+
+                    <div class="floods-text">
+                        <h3>
+                            The fastest insect in the world
+                            <span>
+                                Blogger
+                                <label>|</label>
+                                <i>Adom Smith</i>
+                            </span>
+                        </h3>
+
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="blog-item">
+                    <img src="/images/3.jpg" alt=" " class="img-fluid" />
+                    <button type="button" class="btn btn-primary play" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-play"></i>
+                    </button>
+
+
+                    <div class="floods-text">
+                        <h3>
+                            Billionaires versus Millionaires
+                            <span>
+                                Blogger
+                                <label>|</label>
+                                <i>Adom Smith</i>
+                            </span>
+                        </h3>
+
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="blog-item">
+                    <img src="/images/4.jpg" alt=" " class="img-fluid" />
+                    <button type="button" class="btn btn-primary play" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fas fa-play"></i>
+                    </button>
+
+
+                    <div class="floods-text">
+                        <h3>
+                            Billionaires versus Millionaires
+                            <span>
+                                Blogger
+                                <label>|</label>
+                                <i>Adom Smith</i>
+                            </span>
+                        </h3>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="embed-responsive embed-responsive-21by9">
+                        <iframe src="https://player.vimeo.com/video/145787219"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--/middle-->
+@*<section class="middle-sec-agileinfo-w3ls">
+	<div class="container">
+	<div class="row inner-sec">
+	<div class="col-md-4 news-left">
+	<ul id="demo1_thumbs" class="list-inline">
+	<li>
+	<a href="images/m1.jpg">
+	<img src="images/m1.jpg" alt="" data-desoslide-caption="<h3>Latest Post 1</h3>">
+	<div class="mid-text-info">
+	<h4>Maecenas aliqua</h4>
+	<p>Integer </p>
+	<div class="sub-meta">
+	<span>
+	<i class="far fa-clock"></i> 20 Feb, 2018
+	</span>
+	</div>
+	</div>
+	</a>
+	</li>
+	<li>
+	<a href="images/m2.jpg">
+	<img src="images/m2.jpg" alt="" data-desoslide-caption="<h3>Latest Post 2</h3>">
+	<div class="mid-text-info">
+	<h4>Maecenas aliqua</h4>
+	<p>Integer </p>
+	<div class="sub-meta">
+	<span>
+	<i class="far fa-clock"></i> 20 Feb, 2018
+	</span>
+	</div>
+	</div>
+	</a>
+	</li>
+	<li>
+	<a href="images/m3.jpg">
+	<img src="images/m3.jpg" alt="" data-desoslide-caption="<h3>Latest Post 3</h3>">
+	<div class="mid-text-info">
+	<h4>Maecenas aliqua</h4>
+	<p>Integer </p>
+	<div class="sub-meta">
+	<span>
+	<i class="far fa-clock"></i> 20 Feb, 2018
+	</span>
+	</div>
+	</div>
+	</a>
+	</li>
+	<li>
+	<a href="images/m4.jpg">
+	<img src="images/m4.jpg" alt="" data-desoslide-caption="<h3>Latest Post 4</h3>">
+	<div class="mid-text-info">
+	<h4>Maecenas aliqua</h4>
+	<p>Integer </p>
+	<div class="sub-meta">
+	<span>
+	<i class="far fa-clock"></i> 20 Feb, 2018
+	</span>
+	</div>
+	</div>
+	</a>
+	</li>
+	</ul>
+	</div>
+	<div id="demo1_main_image" class="col-md-8  news-right"></div>
+	<div class="clearfix"> </div>
+	</div>
+	</div>
+
+	</section>*@
+<!--//middle-->
+<!---->
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <h3 class="tittle">Blog Posts      @ViewBag.Exception      </h3>
+        <div class="row">
+            <div class="col-md-12"> <button class="btn-success p-2 rounded" onclick="navigateToBlog()">New Blog</button> </div>
+        </div>
+        <div class="inner-sec">
+            <!--left-->
+            <div class="left-blog-info-w3layouts-agileits text-left">
+
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 card">
+                            <a href="single.html">
+                                <img src="/images/7.jpg" class="card-img-top img-fluid" alt="">
+                            </a>
+                            <div class="card-body">
+                                <ul class="blog-icons my-4">
+                                    <li>
+                                        <a href="/UserDefault/Index/@item.User.UserId">
+                                            @item.User.FirstName
+                                        </a>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i> @(((DateTime)item.CreatedAt).ToString("dd-MMM-yyyy").ToUpper())
+                                        </a>
+                                    </li>
+                                    <li class="mx-2">
+                                        @if (@item.Comments != null)
+
+
+
+
+
+
+
+                                        {
+                                            <a href="#">
+                                                <i class="far fa-comment"></i> @item.Comments.Count()
+                                            </a>
+                                        }
+
+
+
+
+
+
+
+                                        else
+
+
+
+
+
+
+
+                                        {
+                                            <a href="#">
+                                                <i class="far fa-comment"></i> 0
+                                            </a>
+                                        }
+                                    </li>
+                                    <li>
+
+                                        <a href="#">
+                                            <i class="fas fa-eye"></i> @item.Category.CategoryName
+                                        </a>
+                                    </li>
+
+                                </ul>
+                                <h5 class="card-title">
+                                    <a href="/Blog/Details/@item.BlogId">@item.BlogTitle</a>
+                                </h5>
+                                @if (@item.BlogContent.Length < 94)
+
+
+
+
+
+
+
+                                {
+                                    <p class="card-text mb-3">@item.BlogContent </p>
+                                    <a href="/Blog/Details/@item.BlogId" class="btn btn-primary read-m">Read More</a>
+                                }
+
+
+
+
+
+
+
+                                else
+
+
+
+
+
+
+
+                                {
+                                    <p class="card-text mb-3">@item.BlogContent.Substring(0, @item.BlogContent.Substring(0, 94).LastIndexOf(" ")) ....</p>
+                                    <a href="/Blog/Details/@item.BlogId" class="btn btn-primary read-m">Read More</a>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-left mt-4">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!--//left-->
+        </div>
+    </div>
+</section>
+<!--//main-->
+
+
+<style>
+    .hidden-link {
+        display: none;
+    }
+</style>

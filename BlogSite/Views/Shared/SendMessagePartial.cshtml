@@ -1,0 +1,28 @@
+﻿@model Entities.Message2
+<div class="form-group send_data">
+	<form id="sendMessageForm" method="post" action="@Url.Action("SendMessage","Message")">
+		<input type="hidden" name="SenderId" asp-for="SenderId" />
+		<input type="hidden" name="ReceieverId" asp-for="ReceieverId" />
+		<textarea name="Subject" id="text_area" class="form-control" rows="1">@Model.Subject</textarea>
+		<input class="btn btn-submit" style="background-color: white;height: 2.6rem;margin-top: 7px;" value="Send Message" type="submit">
+	</form>
+</div>
+
+<script>
+	$('#sendMessageBtn').click(function () {
+		$.ajax({
+			url: '@Url.Action("SendMessage", "Message")',
+			type: 'POST',
+			data: {
+				SenderId: $('#SenderId').val(),
+				ReceieverId: $('#ReceieverId').val(),
+				Subject: $('#text_area').val()
+			},
+			success: function (result) {
+				// mesaj gönderildikten sonra Chat.cshtml sayfasının yenilenmesi gerekmiyor
+				// yeni mesajlar _ChatUserPartial içinde gösterilebilir
+			}
+		});
+	});
+
+</script>

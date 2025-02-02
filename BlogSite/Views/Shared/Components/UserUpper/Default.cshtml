@@ -1,0 +1,50 @@
+﻿@using System.Security.Claims;
+@model DTO.UserDto.UserUpdateDto
+
+<div class="profile-section">
+	<div class="row child-profile">
+		<div class="col-md-9 me-4  img-div-pfp">
+			<img src="~/images/userimages/@Model.UserImage " id="profile-image" alt="">
+			<div class="col-md-5 bio-text">
+				<h4>@Model.FirstName @Model.LastName</h4>
+				<h6>@Model.Age</h6>
+				<p>
+					@Model.Biography
+				</p>
+			</div>
+			<div class="col-md-4 profile-footer">
+				<div class="buttons-profile">
+					@{
+						int d;
+						bool b = int.TryParse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value, out d);
+					}
+					@if (b)
+					{
+						@if (d == Model.UserId)
+						{
+							<a class="btn" href="/UserDefault/UpdateUser/@Model.UserId">Edit</a>
+
+						}
+						else
+						{
+							@if (ViewBag.CheckFriendShip)
+							{
+								<a class="btn" href="/UserDefault/Chat/@Model.UserId">Send Message</a>
+								<a class="btn" href="/UserDefault/CancelFriendRequest/@Model.UserId">Cancel Request</a>
+
+							}
+							else
+							{
+								<a class="btn" href="/UserDefault/SendRequest/@Model.UserId">Add to friends</a>
+							}
+						}
+					}
+
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
